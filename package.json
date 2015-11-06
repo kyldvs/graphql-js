@@ -21,7 +21,6 @@
   },
   "babel": {
     "optional": [
-      "runtime",
       "es7.asyncFunctions"
     ]
   },
