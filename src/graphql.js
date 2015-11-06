@@ -46,27 +46,21 @@ export function graphql(
   rootValue?: ?any,
   variableValues?: ?{[key: string]: any},
   operationName?: ?string
-): Promise<GraphQLResult> {
-  return new Promise(resolve => {
-    var source = new Source(requestString || '', 'GraphQL request');
-    var documentAST = parse(source);
-    var validationErrors = validate(schema, documentAST);
-    if (validationErrors.length > 0) {
-      resolve({ errors: validationErrors });
-    } else {
-      resolve(
-        execute(
-          schema,
-          documentAST,
-          rootValue,
-          variableValues,
-          operationName
-        )
-      );
-    }
-  }).catch(error => {
-    return { errors: [ error ] };
-  });
+): GraphQLResult {
+  var source = new Source(requestString || '', 'GraphQL request');
+  var documentAST = parse(source);
+  var validationErrors = validate(schema, documentAST);
+  if (validationErrors.length > 0) {
+    return { errors: validationErrors };
+  } else {
+    return execute(
+      schema,
+      documentAST,
+      rootValue,
+      variableValues,
+      operationName
+    );
+  }
 }
 
 /**
